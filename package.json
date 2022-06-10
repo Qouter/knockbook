@@ -9,12 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^1.35.3",
+    "firebase": "^9.8.2",
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-icons": "^4.4.0"
   },
   "devDependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.0",
     "autoprefixer": "^10.4.7",
     "eslint": "8.14.0",
     "eslint-config-next": "12.1.6",
