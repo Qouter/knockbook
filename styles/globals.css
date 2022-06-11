@@ -6,7 +6,22 @@
 @layer components {
 
   .sidebar-icon {
-    @apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto shadow-lg bg-primary hover:bg-secondary hover:text-primary rounded-3xl hover:rounded-xl transition-all duration-300 cursor-pointer ease-linear;
+    @apply relative flex items-center justify-center w-12 h-12 mx-auto mt-2 mb-2 transition-all duration-300 ease-linear shadow-lg cursor-pointer bg-primary hover:bg-secondary hover:text-primary rounded-3xl hover:rounded-xl;
   }
 
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color:inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
 }
