@@ -22,7 +22,7 @@ class Product {
 export default function Gallery({ images }) {
   return (
     <>
-      <SideBar></SideBar>
+      <SideBar />
       <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
         <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
           {images.map((image) => (
@@ -65,10 +65,12 @@ export async function getStaticProps() {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhdnhmcGRoZHRxcHdvbmRpc3BmIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTQ4MDM5NTksImV4cCI6MTk3MDM3OTk1OX0.kjKDIaUSpMxQgao5fnXZTqGd4iYvnJA770aTNiw846U"
   );
 
-  let { storage } = await supabase.storage.from("knockbooks");
+  // let { storage } = await supabase.storage.from("knockbooks").select("*");
+
   let { data: products, error } = await supabase.from("products").select("*");
 
   let images = [];
+  // console.log(JSON.stringify(storage));
   products.forEach((element) => {
     images.push(element.image);
   });

@@ -9,8 +9,8 @@ const SideBar = () => {
     <div className="fixed top-0 left-0 h-screen w-20 m-0 bg-primary flex flex-col text-secondary drop-shadow-lg">
       <SideBarIcon icon={<BsFillHouseFill size="28" />} linkPath="/" />
       <SideBarIcon icon={<HiTrendingUp size="28" />} linkPath="./market" />
-      <SideBarIcon icon={<BiSearchAlt size="28" />} />
-      <SideBarIcon icon={<FaRegUserCircle size="28" />} />
+      <SideBarIcon icon={<BiSearchAlt size="28" />} linkPath="./search" />
+      <SideBarIcon icon={<FaRegUserCircle size="28" />} linkPath="./profile" />
     </div>
   );
 };
