@@ -1,4 +1,3 @@
-import styles from "../styles/Market.module.css";
 import Link from "next/link";
 import SideBar from "../components/SideBar";
 

@@ -1,10 +1,9 @@
-import styles from "../styles/Market.module.css";
 import Link from "next/link";
 import SideBar from "../components/SideBar";
 
 export default function Tendences() {
   return (
-    <h2 className="flex justify-center items-center h-screen text-2xl">
+    <h2 className="flex items-center justify-center h-screen text-2xl">
       Tendences
     </h2>
   );

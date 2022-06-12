@@ -6,13 +6,18 @@ module.exports = {
   darkMode: "true",
   content: [],
   theme: {
-    extend: {},
-    colors: {
-      primary: "#fbd38d",
-      secondary: "#335145",
-      gray: colors.gray,
-      red: colors.red,
+    extend: {
+      colors: {
+        primary: "#fbd38d",
+        secondary: "#335145",
+        tertiary: "#3C1518",
+        quaternary: "#69140E",
+        quinary: "#A44200",
+      },
     },
   },
-  plugins: [require("@tailwindcss/aspect-ratio")],
+  plugins: [
+    require("@tailwindcss/aspect-ratio"),
+    require("@tailwindcss/forms"),
+  ],
 };
