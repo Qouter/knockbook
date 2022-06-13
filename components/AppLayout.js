@@ -1,9 +1,10 @@
 import SideBar from "./SideBar";
+
 export default function AppLayout({ children }) {
   return (
-    <>
+    <main className="flex flex-row">
       <SideBar />
-      <div className="flex ">{children}</div>
-    </>
+      {children}
+    </main>
   );
 }

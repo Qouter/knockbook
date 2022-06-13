@@ -1,10 +1,10 @@
-import SideBar from "../components/SideBar";
+import AppLayout from "../components/AppLayout";
 
 export default function Create() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="max-w-md mt-8">
-        <div className="grid grid-cols-1 gap-6">
+    <div className="flex flex-col items-center justify-center w-screen h-screen">
+      <div className="w-96">
+        <div className="grid grid-cols-1 gap-8">
           <label className="block">
             <span className="text-gray-700">Nombre</span>
             <input
@@ -50,16 +50,10 @@ export default function Create() {
           </div>
         </div>
       </div>
-      <div></div>
     </div>
   );
 }
 
 Create.getLayout = function getLayout(page) {
-  return (
-    <div className="flex flex-col h-screen">
-      <SideBar />
-      {page}
-    </div>
-  );
+  return <AppLayout>{page}</AppLayout>;
 };

@@ -1,19 +1,13 @@
-import Link from "next/link";
-import SideBar from "../components/SideBar";
+import AppLayout from "../components/AppLayout";
 
 export default function Search() {
   return (
-    <h2 className="flex justify-center items-center h-screen text-2xl">
+    <h2 className="flex items-center justify-center h-screen w-screen text-2xl">
       Search
     </h2>
   );
 }
 
 Search.getLayout = function getLayout(page) {
-  return (
-    <>
-      <SideBar />
-      {page}
-    </>
-  );
+  return <AppLayout>{page}</AppLayout>;
 };

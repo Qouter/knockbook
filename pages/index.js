@@ -1,23 +1,13 @@
-import Link from "next/link";
-import SideBar from "../components/SideBar";
+import AppLayout from "../components/AppLayout";
 import Gallery from "../components/Gallery";
 import { createClient } from "@supabase/supabase-js";
 
-export default function Market({ products }) {
-  return (
-    <>
-      <div>{<Gallery products={products} />}</div>
-    </>
-  );
+export default function Home({ products }) {
+  return <>{<Gallery products={products} />}</>;
 }
 
-Market.getLayout = function getLayout(page) {
-  return (
-    <div>
-      <SideBar />
-      {page}
-    </div>
-  );
+Home.getLayout = function getLayout(page) {
+  return <AppLayout>{page}</AppLayout>;
 };
 
 export async function getStaticProps() {
