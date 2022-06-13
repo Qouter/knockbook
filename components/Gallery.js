@@ -5,17 +5,6 @@ function cn(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-class Product {
-  constructor(height, width, src) {
-    this.id = id;
-    this.href = height;
-    this.imageSrc = src;
-    this.name = name;
-    this.imageSrc = width;
-    this.username = username;
-  }
-}
-
 export default function Gallery({ products }) {
   return (
     <div className="flex-1 w-screen max-w-2xl px-4 py-16 mx-auto sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
