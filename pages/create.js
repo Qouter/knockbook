@@ -93,7 +93,7 @@ export default function Create() {
               <div>
                 <label className="inline-flex items-center">
                   <div className="flex justify-center">
-                    <div className="mb-3 w-96">
+                    <div className=" w-96">
                       <label
                         htmlFor="formFile"
                         className="inline-block mb-2 text-gray-700 form-label"
@@ -128,12 +128,12 @@ export default function Create() {
             </div>
           </div>
           <div className="block">
-            <div className="mt-2">
+            <div className="">
               <button
-                className="w-20 text-white rounded-lg shadow-lg bg-slate-500 hover:text-black hover:bg-primary hover:shadow-2xl"
+                className="w-32 h-10 text-white rounded-lg shadow-lg bg-slate-500 hover:text-black hover:bg-primary hover:shadow-2xl"
                 type="submit"
               >
-                Create
+                Crear
               </button>
             </div>
           </div>
