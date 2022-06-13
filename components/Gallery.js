@@ -1,9 +1,5 @@
 import Image from "next/image";
 import { useState } from "react";
-import { SupabaseStorageClient } from "@supabase/storage-js";
-import { createClient } from "@supabase/supabase-js";
-import SideBar from "../components/SideBar";
-import Link from "next/link";
 
 function cn(...classes) {
   return classes.filter(Boolean).join(" ");

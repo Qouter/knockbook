@@ -1,6 +1,18 @@
 import AppLayout from "../components/AppLayout";
 import Gallery from "../components/Gallery";
-import { createClient } from "@supabase/supabase-js";
+import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBYGLAP1Bci_ikgywZ90daSeElNf1nucVc",
+  authDomain: "knockbook-2ab9b.firebaseapp.com",
+  projectId: "knockbook-2ab9b",
+  storageBucket: "knockbook-2ab9b.appspot.com",
+  messagingSenderId: "800646575452",
+  appId: "1:800646575452:web:b99402f7ebc428cd62fd99",
+  measurementId: "G-LKQ4ZDD5NQ",
+};
 
 export default function Home({ products }) {
   return <>{<Gallery products={products} />}</>;
@@ -11,22 +23,16 @@ Home.getLayout = function getLayout(page) {
 };
 
 export async function getStaticProps() {
-  const supabase = createClient(
-    "https://bavxfpdhdtqpwondispf.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhdnhmcGRoZHRxcHdvbmRpc3BmIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTQ4MDM5NTksImV4cCI6MTk3MDM3OTk1OX0.kjKDIaUSpMxQgao5fnXZTqGd4iYvnJA770aTNiw846U"
-  );
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-  // let { storage } = await supabase.storage.from("knockbooks").select("*");
+  const productsCol = collection(db, "products");
+  const productsSnapshot = await getDocs(productsCol);
+  const productsList = productsSnapshot.docs.map((doc) => doc.data());
 
-  let { data: products, error } = await supabase.from("products").select("*");
-  let productsList = [];
-
-  products.forEach((product) => {
-    productsList.push(product.image);
-  });
   return {
     props: {
-      products: products,
+      products: productsList,
     },
   };
 }
