@@ -29,15 +29,15 @@ class Product {
   }
 }
 
-const addToDatabase = async (db, productImage) => {
+const addToDatabase = async (db, product, productImagePath) => {
   try {
     const docRef = await addDoc(collection(db, "products"), {
-      name: "NameW",
-      kind: "KindW",
-      description: "DescriptionW",
-      image: productImage,
+      name: product.name,
+      kind: product.kind,
+      description: product.description,
+      price: product.price,
+      image: productImagePath,
     });
-    console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
   }
@@ -52,23 +52,24 @@ export default function Create() {
 
   const submitProduct = async (e) => {
     e.preventDefault();
+    const { name, price, kind, description } = e.target;
+    const product = new Product(
+      name.value,
+      price.value,
+      kind.value,
+      description.value,
+      file
+    );
     const path = `${file.name}`;
     const app = initializeApp(firebaseConfig);
     const storage = getStorage(app);
     const db = getFirestore(app);
     const productRef = ref(storage, path);
-    const uploadTask = uploadBytesResumable(productRef, file);
-    console.log(e.target.name.value);
+    const uploadTask = uploadBytesResumable(productRef, product.file);
 
-    // Register three observers:
-    // 1. 'state_changed' observer, called any time the state changes
-    // 2. Error observer, called on failure
-    // 3. Completion observer, called on successful completion
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        // Observe state change events such as progress, pause, and resume
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log("Upload is " + progress + "% done");
@@ -85,11 +86,9 @@ export default function Create() {
         // Handle unsuccessful uploads
       },
       () => {
-        // Handle successful uploads on complete
-        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          addToDatabase(db, downloadURL);
-          console.log("File available at", downloadURL);
+          addToDatabase(db, product, downloadURL);
+          alert(`Product ${product.name} added successfully`);
         });
       }
     );
@@ -118,6 +117,7 @@ export default function Create() {
               id="price"
               name="price"
               type="number"
+              step=".01"
               min="0"
               className="block w-full mt-1 bg-gray-100 border-transparent rounded-md focus:border-gray-500 focus:bg-white focus:ring-0"
               placeholder=""
@@ -129,9 +129,9 @@ export default function Create() {
               id="kind"
               className="block w-full mt-1 bg-gray-100 border-transparent rounded-md focus:border-gray-500 focus:bg-white focus:ring-0"
             >
-              <option>Tipos 1</option>
-              <option>Tipo 2</option>
-              <option>Tipo 3</option>
+              <option>Cacharro</option>
+              <option>Máquina</option>
+              <option>Articulugio</option>
             </select>
           </label>
           <label className="block">
