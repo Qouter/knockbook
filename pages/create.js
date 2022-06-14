@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import AppLayout from "../components/AppLayout";
 import { initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBYGLAP1Bci_ikgywZ90daSeElNf1nucVc",
@@ -23,6 +29,20 @@ class Product {
   }
 }
 
+const addToDatabase = async (db, productImage) => {
+  try {
+    const docRef = await addDoc(collection(db, "products"), {
+      name: "NameW",
+      kind: "KindW",
+      description: "DescriptionW",
+      image: productImage,
+    });
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+};
+
 export default function Create() {
   const [file, setFile] = useState(null);
 
@@ -32,13 +52,47 @@ export default function Create() {
 
   const submitProduct = async (e) => {
     e.preventDefault();
-    const path = `/images/${file.name}`;
+    const path = `${file.name}`;
     const app = initializeApp(firebaseConfig);
     const storage = getStorage(app);
+    const db = getFirestore(app);
     const productRef = ref(storage, path);
-    uploadBytes(productRef, file).then((snapshot) => {
-      console.log("Uploaded a blob or file!");
-    });
+    const uploadTask = uploadBytesResumable(productRef, file);
+    console.log(e.target.name.value);
+
+    // Register three observers:
+    // 1. 'state_changed' observer, called any time the state changes
+    // 2. Error observer, called on failure
+    // 3. Completion observer, called on successful completion
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+        }
+      },
+      (error) => {
+        // Handle unsuccessful uploads
+      },
+      () => {
+        // Handle successful uploads on complete
+        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          addToDatabase(db, downloadURL);
+          console.log("File available at", downloadURL);
+        });
+      }
+    );
   };
 
   return (

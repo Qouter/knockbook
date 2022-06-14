@@ -10,7 +10,7 @@ export default function Gallery({ products }) {
     <div className="flex-1 w-screen max-w-2xl px-4 py-16 mx-auto sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
       <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
         {products.map((image) => (
-          <BlurImage key={"image.id"} image={image} />
+          <BlurImage key={image.image.id} image={image} />
         ))}
       </div>
     </div>
@@ -36,9 +36,9 @@ function BlurImage(product) {
           onLoadingComplete={() => setLoading(false)}
         />
       </div>
-      <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
+      <h3 className="mt-4 text-sm text-gray-700">{product.image.name}</h3>
       <p className="mt-1 text-lg font-medium text-gray-900">
-        {product.username}
+        {product.image.kind}
       </p>
     </a>
   );
