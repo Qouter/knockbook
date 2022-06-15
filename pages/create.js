@@ -7,7 +7,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBYGLAP1Bci_ikgywZ90daSeElNf1nucVc",
@@ -29,7 +29,7 @@ class Product {
   }
 }
 
-const addToDatabase = async (db, product, productImagePath) => {
+const addToDatabase = async (db, product, productImagePath, id) => {
   try {
     const docRef = await addDoc(collection(db, "products"), {
       name: product.name,
@@ -37,6 +37,7 @@ const addToDatabase = async (db, product, productImagePath) => {
       description: product.description,
       price: product.price,
       image: productImagePath,
+      id: id.toString(),
     });
   } catch (e) {
     console.error("Error adding document: ", e);
@@ -52,6 +53,7 @@ export default function Create() {
 
   const submitProduct = async (e) => {
     e.preventDefault();
+
     const { name, price, kind, description } = e.target;
     const product = new Product(
       name.value,
@@ -66,6 +68,11 @@ export default function Create() {
     const db = getFirestore(app);
     const productRef = ref(storage, path);
     const uploadTask = uploadBytesResumable(productRef, product.file);
+
+    const productsCol = collection(db, "products");
+    const productsSnapshot = await getDocs(productsCol);
+    const productsList = productsSnapshot.docs.map((doc) => doc.data());
+    const productId = productsList.length;
 
     uploadTask.on(
       "state_changed",
@@ -87,7 +94,7 @@ export default function Create() {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          addToDatabase(db, product, downloadURL);
+          addToDatabase(db, product, downloadURL, productId);
           alert(`Product ${product.name} added successfully`);
         });
       }
