@@ -21,7 +21,13 @@ export default function Product({ products }) {
     (product) => product.id === router.query.id
   )[0];
 
-  return <ProductDetail product={product} />;
+  const retDiv = product ? (
+    <ProductDetail product={product} />
+  ) : (
+    <h2>LOADING</h2>
+  );
+
+  return retDiv;
 }
 
 Product.getLayout = function getLayout(page) {
