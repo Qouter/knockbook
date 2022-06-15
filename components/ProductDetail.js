@@ -1,12 +1,16 @@
+import Image from "next/image";
+
 export default function ProductDetail({ product }) {
   return (
     <section className="overflow-hidden text-gray-700 bg-white body-font">
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-wrap mx-auto lg:w-4/5">
-          <img
+          <Image
             alt="ecommerce"
             className="object-cover object-center w-full border border-gray-200 rounded lg:w-1/2"
             src={product.image}
+            width={400}
+            height={400}
           />
           <div className="w-full mt-6 lg:w-1/2 lg:pl-10 lg:py-6 lg:mt-0">
             <h2 className="text-sm tracking-widest text-gray-500 title-font">
