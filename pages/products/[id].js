@@ -17,9 +17,8 @@ const firebaseConfig = {
 export default function Product({ products }) {
   const router = useRouter();
 
-  const product = products.filter(
-    (product) => product.id === router.query.id
-  )[0];
+  const product =
+    products && products.filter((product) => product.id === router.query.id)[0];
 
   const retDiv = product ? (
     <ProductDetail product={product} />
