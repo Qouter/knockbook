@@ -1,21 +1,9 @@
 import AppLayout from "../components/AppLayout";
 import Gallery from "../components/Gallery";
-import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBYGLAP1Bci_ikgywZ90daSeElNf1nucVc",
-  authDomain: "knockbook-2ab9b.firebaseapp.com",
-  projectId: "knockbook-2ab9b",
-  storageBucket: "knockbook-2ab9b.appspot.com",
-  messagingSenderId: "800646575452",
-  appId: "1:800646575452:web:b99402f7ebc428cd62fd99",
-  measurementId: "G-LKQ4ZDD5NQ",
-};
+import { getProducts } from "../firebase/client";
 
 export default function Home({ products }) {
-  return <>{<Gallery products={products} />}</>;
+  return <Gallery products={products} />;
 }
 
 Home.getLayout = function getLayout(page) {
@@ -23,16 +11,10 @@ Home.getLayout = function getLayout(page) {
 };
 
 export async function getStaticProps() {
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  const productsCol = collection(db, "products");
-  const productsSnapshot = await getDocs(productsCol);
-  const productsList = productsSnapshot.docs.map((doc) => doc.data());
-
+  const products = await getProducts();
   return {
     props: {
-      products: productsList,
+      products,
     },
     revalidate: 5,
   };

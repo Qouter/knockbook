@@ -21,7 +21,7 @@ export default function Gallery({ products }) {
 function BlurImage(product) {
   const [isLoading, setLoading] = useState(true);
   return (
-    <div className="group">
+    <div className="group" key={product.image.id}>
       <div className="w-full overflow-hidden bg-gray-200 rounded-lg aspect-w-1 aspect-h-1 xl:aspect-w-7 xl:aspect-h-8">
         <Link href={`./products/${product.image.id}`} className="group">
           <Image
