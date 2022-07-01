@@ -19,7 +19,9 @@ const SideBar = () => {
 const SideBarIcon = ({ icon, linkPath = "/" }) => {
   return (
     <Link href={linkPath}>
-      <div className="sidebar-icon">{icon}</div>
+      <div className="sidebar-icon" id={linkPath}>
+        {icon}
+      </div>
     </Link>
   );
 };
