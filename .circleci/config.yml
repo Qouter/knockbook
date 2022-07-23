@@ -18,6 +18,7 @@ jobs:
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - ./node_modules
+            - /home/circleci/.cache/Cypress
       - run:
           name: Run Unit Tests
           command: npm run utest
