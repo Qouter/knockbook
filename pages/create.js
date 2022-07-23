@@ -103,13 +103,11 @@ export default function Create() {
 
   return (
     <>
-      <div className="flex justify-center">
-        <h1>Create</h1>
-      </div>
       <form
         className="flex flex-col items-center justify-center w-screen h-screen"
         onSubmit={submitProduct}
       >
+        <h1>Create</h1>
         <div className="w-96">
           <div className="grid grid-cols-1 gap-8">
             <label className="block">
