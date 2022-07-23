@@ -1,11 +1,26 @@
 version: 2.1
-orbs:
-  # "cypress-io/cypress@1" installs the latest published
-  # version "1.x.y" of the orb. We recommend you then use
-  # the strict explicit version "cypress-io/cypress@1.x.y"
-  # to lock the version and prevent unexpected CI changes
-  cypress: cypress-io/cypress@1
-workflows:
+jobs:
   build:
-    jobs:
-      - cypress/run # "run" job comes from "cypress" orb
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - run:
+          name: Update NPM
+          command: "sudo npm install -g npm@5"
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install Dependencies
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Run Unit Tests
+          command: npm run utest
+      - run:
+          name: Run Integration Tests
+          command: npm run itest

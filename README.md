@@ -23,9 +23,9 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 Cypress testing without UI
 ```bash
-npm run test
+npm run itest
 # or
-yarn test
+yarn itest
 ```
 
 Cypress testing with UI
