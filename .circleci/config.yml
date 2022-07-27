@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/repo
     docker:
-      - image: cypress/browsers:latest
+      - image: cypress/browsers:node16.5.0-chrome97-ff96
     steps:
       - checkout
       - run:
