@@ -21,9 +21,13 @@ export default function Product({ products }) {
     products && products.filter((product) => product.id === router.query.id)[0];
 
   const retDiv = product ? (
-    <ProductDetail product={product} />
+    <div className="flex items-center justify-center w-screen h-screen">
+      <ProductDetail product={product} />
+    </div>
   ) : (
-    <h2>LOADING</h2>
+    <div className="flex items-center justify-center w-screen h-screen">
+      <h2>LOADING...</h2>
+    </div>
   );
 
   return retDiv;

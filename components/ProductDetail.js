@@ -3,7 +3,6 @@ import Image from "next/image";
 export default function ProductDetail({ product }) {
   return (
     <>
-      <h1>Create</h1>
       <section className="overflow-hidden text-gray-700 bg-white body-font">
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-wrap mx-auto lg:w-4/5">

@@ -109,7 +109,7 @@ export default function Create() {
         className="flex flex-col items-center justify-center w-screen h-screen"
         onSubmit={submitProduct}
       >
-        <h1>Create</h1>
+        <h1 className="mt-2 mb-4 text-2xl text-center">Create</h1>
         <div className="w-96">
           <div className="grid grid-cols-1 gap-8">
             <label className="block">

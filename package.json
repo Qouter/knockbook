@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "cypress": "cypress run",
+    "cypress": "cypress open",
     "itest": "start-server-and-test start http://localhost:3000 cypress",
     "utest": "jest"
   },
