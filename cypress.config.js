@@ -9,6 +9,7 @@ module.exports = defineConfig({
 
   component: {
     devServer: {
+      video: false,
       framework: "next",
       bundler: "webpack",
     },

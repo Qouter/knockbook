@@ -1,4 +1,5 @@
 import AppLayout from "../components/AppLayout";
+import Title from "../components/Title";
 
 export default function Market() {
   return (

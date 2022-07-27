@@ -8,6 +8,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
+import Title from "../components/Title";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBYGLAP1Bci_ikgywZ90daSeElNf1nucVc",
@@ -50,8 +51,6 @@ export default function Create() {
   function handleChange(e) {
     if (e.target.files[0]) setFile(e.target.files[0]);
   }
-
-  function handleSubmit(e) {}
 
   const submitProduct = async (e) => {
     e.preventDefault();
@@ -109,8 +108,8 @@ export default function Create() {
         className="flex flex-col items-center justify-center w-screen h-screen"
         onSubmit={submitProduct}
       >
-        <h1 className="mt-2 mb-4 text-2xl text-center">Create</h1>
-        <div className="w-96">
+        <Title text="Create" />
+        <div className="mt-2 w-96">
           <div className="grid grid-cols-1 gap-8">
             <label className="block">
               <span className="text-gray-700">Nombre</span>
@@ -138,6 +137,7 @@ export default function Create() {
               <span className="text-gray-700">¿De qué tipo es?</span>
               <select
                 id="kind"
+                name="kind"
                 className="block w-full mt-1 bg-gray-100 border-transparent rounded-md focus:border-gray-500 focus:bg-white focus:ring-0"
               >
                 <option>Cacharro</option>
@@ -151,6 +151,7 @@ export default function Create() {
                 className="block w-full mt-1 bg-gray-100 border-transparent rounded-md focus:border-gray-500 focus:bg-white focus:ring-0"
                 rows="3"
                 id="description"
+                name="description"
               ></textarea>
             </label>
             <div className="block">

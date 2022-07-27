@@ -1,12 +1,13 @@
 import AppLayout from "../components/AppLayout";
 import Gallery from "../components/Gallery";
 import { getProducts } from "../firebase/client";
+import Title from "../components/Title";
 
 export default function Home({ products }) {
   return (
     <div className="flex justify-center w-screen h-screen align-middle">
       <div className="flex flex-col">
-        <h1 className="mt-4 text-2xl text-center">Products</h1>
+        <Title text="Products" />
         <Gallery products={products} />
       </div>
     </div>
