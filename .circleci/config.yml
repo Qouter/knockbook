@@ -10,7 +10,7 @@ jobs:
           name: Update NPM
           command: "sudo npm install -g npm@6"
       - restore_cache:
-          key:  v3-dependencies-cypress-testing-{{ checksum "package-lock.json" }}
+          key:  dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: Install Dependencies
           command: npm install
@@ -18,10 +18,10 @@ jobs:
             paths:
                 - ~/.cache/cypress
                 - node_modules
-            key: v3-dependencies-cypress-testing-{{ checksum "package-lock.json" }}
+            key: dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: Run Unit Tests
-          command: npm run utest
+          command: npm run jest
       - run:
           name: Building
           command: npm run build
