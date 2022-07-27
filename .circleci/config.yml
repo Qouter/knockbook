@@ -21,7 +21,7 @@ jobs:
             key: dependencies-{{ checksum "package-lock.json" }}
       - run:
           name: Run Unit Tests
-          command: npm run jest
+          command: npm run utest
       - run:
           name: Building
           command: npm run build
