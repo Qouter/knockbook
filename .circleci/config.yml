@@ -25,6 +25,6 @@ jobs:
       - run:
           name: Building
           command: npm run build
-      - run:
-          name: Run Integration Tests
-          command: npm run itest
+      # - run:
+      #     name: Run Integration Tests
+      #     command: npm run itest

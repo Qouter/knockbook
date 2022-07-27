@@ -51,6 +51,8 @@ export default function Create() {
     if (e.target.files[0]) setFile(e.target.files[0]);
   }
 
+  function handleSubmit(e) {}
+
   const submitProduct = async (e) => {
     e.preventDefault();
 
