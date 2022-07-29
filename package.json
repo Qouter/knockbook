@@ -12,6 +12,7 @@
     "utest": "jest"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^1.9.1",
     "firebase": "^9.8.3",
     "next": "12.1.6",
     "react": "18.1.0",

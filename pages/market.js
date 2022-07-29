@@ -1,11 +1,12 @@
 import AppLayout from "../components/AppLayout";
-import Title from "../components/Title";
+import Auth from "../components/Auth";
 
 export default function Market() {
   return (
-    <h1 className="flex items-center justify-center w-screen h-screen text-2xl">
-      Market
-    </h1>
+    <div className="flex flex-col items-center justify-center w-screen h-screen text-2xl">
+      {/* <h1>Market</h1> */}
+      <Auth></Auth>
+    </div>
   );
 }
 
