@@ -1,24 +1,25 @@
-import AppLayout from "../../components/AppLayout";
-import { useRouter } from "next/router";
-import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
-import { initializeApp } from "firebase/app";
-import ProductDetail from "../../components/ProductDetail";
+import { initializeApp } from 'firebase/app'
+import { collection, getDocs, getFirestore } from 'firebase/firestore/lite'
+import { useRouter } from 'next/router'
+
+import AppLayout from '../../components/AppLayout'
+import ProductDetail from '../../components/ProductDetail'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBYGLAP1Bci_ikgywZ90daSeElNf1nucVc",
-  authDomain: "knockbook-2ab9b.firebaseapp.com",
-  projectId: "knockbook-2ab9b",
-  storageBucket: "knockbook-2ab9b.appspot.com",
-  messagingSenderId: "800646575452",
-  appId: "1:800646575452:web:b99402f7ebc428cd62fd99",
-  measurementId: "G-LKQ4ZDD5NQ",
-};
+  apiKey: 'AIzaSyBYGLAP1Bci_ikgywZ90daSeElNf1nucVc',
+  authDomain: 'knockbook-2ab9b.firebaseapp.com',
+  projectId: 'knockbook-2ab9b',
+  storageBucket: 'knockbook-2ab9b.appspot.com',
+  messagingSenderId: '800646575452',
+  appId: '1:800646575452:web:b99402f7ebc428cd62fd99',
+  measurementId: 'G-LKQ4ZDD5NQ'
+}
 
 export default function Product({ products }) {
-  const router = useRouter();
+  const router = useRouter()
 
   const product =
-    products && products.filter((product) => product.id === router.query.id)[0];
+    products && products.filter(product => product.id === router.query.id)[0]
 
   const retDiv = product ? (
     <div className="flex items-center justify-center w-screen h-screen">
@@ -28,33 +29,33 @@ export default function Product({ products }) {
     <div className="flex items-center justify-center w-screen h-screen">
       <h2>LOADING...</h2>
     </div>
-  );
+  )
 
-  return retDiv;
+  return retDiv
 }
 
 Product.getLayout = function getLayout(page) {
-  return <AppLayout>{page}</AppLayout>;
-};
+  return <AppLayout>{page}</AppLayout>
+}
 
 export async function getStaticPaths() {
   return {
-    paths: [{ params: { id: "1" } }, { params: { id: "2" } }],
-    fallback: true, // false or 'blocking'
-  };
+    paths: [{ params: { id: '1' } }, { params: { id: '2' } }],
+    fallback: true
+  }
 }
 
 export async function getStaticProps() {
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+  const app = initializeApp(firebaseConfig)
+  const db = getFirestore(app)
 
-  const productsCol = collection(db, "products");
-  const productsSnapshot = await getDocs(productsCol);
-  const productsList = productsSnapshot.docs.map((doc) => doc.data());
+  const productsCol = collection(db, 'products')
+  const productsSnapshot = await getDocs(productsCol)
+  const productsList = productsSnapshot.docs.map(doc => doc.data())
 
   return {
     props: {
-      products: productsList,
-    },
-  };
+      products: productsList
+    }
+  }
 }

@@ -1,106 +1,103 @@
-import React, { useState } from "react";
-import AppLayout from "../components/AppLayout";
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app'
+import { addDoc, collection, getDocs, getFirestore } from 'firebase/firestore'
 import {
+  getDownloadURL,
   getStorage,
   ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
-import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
-import Title from "../components/Title";
+  uploadBytesResumable
+} from 'firebase/storage'
+import React, { useState } from 'react'
+
+import AppLayout from '../components/AppLayout'
+import Title from '../components/Title'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBYGLAP1Bci_ikgywZ90daSeElNf1nucVc",
-  authDomain: "knockbook-2ab9b.firebaseapp.com",
-  projectId: "knockbook-2ab9b",
-  storageBucket: "knockbook-2ab9b.appspot.com",
-  messagingSenderId: "800646575452",
-  appId: "1:800646575452:web:b99402f7ebc428cd62fd99",
-  measurementId: "G-LKQ4ZDD5NQ",
-};
+  apiKey: 'AIzaSyBYGLAP1Bci_ikgywZ90daSeElNf1nucVc',
+  authDomain: 'knockbook-2ab9b.firebaseapp.com',
+  projectId: 'knockbook-2ab9b',
+  storageBucket: 'knockbook-2ab9b.appspot.com',
+  messagingSenderId: '800646575452',
+  appId: '1:800646575452:web:b99402f7ebc428cd62fd99',
+  measurementId: 'G-LKQ4ZDD5NQ'
+}
 
 class Product {
   constructor(name, price, kind, description, file) {
-    this.name = name;
-    this.price = price;
-    this.kind = kind;
-    this.description = description;
-    this.file = file;
+    this.name = name
+    this.price = price
+    this.kind = kind
+    this.description = description
+    this.file = file
   }
 }
 
 const addToDatabase = async (db, product, productImagePath, id) => {
   try {
-    const docRef = await addDoc(collection(db, "products"), {
+    await addDoc(collection(db, 'products'), {
       name: product.name,
       kind: product.kind,
       description: product.description,
       price: product.price,
       image: productImagePath,
-      id: id.toString(),
-    });
+      id: id.toString()
+    })
   } catch (e) {
-    console.error("Error adding document: ", e);
+    console.error('Error adding document: ', e)
   }
-};
+}
 
 export default function Create() {
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(null)
 
   function handleChange(e) {
-    if (e.target.files[0]) setFile(e.target.files[0]);
+    if (e.target.files[0]) setFile(e.target.files[0])
   }
 
-  const submitProduct = async (e) => {
-    e.preventDefault();
+  const submitProduct = async e => {
+    e.preventDefault()
 
-    const { name, price, kind, description } = e.target;
+    const { name, price, kind, description } = e.target
     const product = new Product(
       name.value,
       price.value,
       kind.value,
       description.value,
       file
-    );
-    const path = `${file.name}`;
-    const app = initializeApp(firebaseConfig);
-    const storage = getStorage(app);
-    const db = getFirestore(app);
-    const productRef = ref(storage, path);
-    const uploadTask = uploadBytesResumable(productRef, product.file);
+    )
+    const path = `${file.name}`
+    const app = initializeApp(firebaseConfig)
+    const storage = getStorage(app)
+    const db = getFirestore(app)
+    const productRef = ref(storage, path)
+    const uploadTask = uploadBytesResumable(productRef, product.file)
 
-    const productsCol = collection(db, "products");
-    const productsSnapshot = await getDocs(productsCol);
-    const productsList = productsSnapshot.docs.map((doc) => doc.data());
-    const productId = productsList.length;
+    const productsCol = collection(db, 'products')
+    const productsSnapshot = await getDocs(productsCol)
+    const productsList = productsSnapshot.docs.map(doc => doc.data())
+    const productId = productsList.length
 
     uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
+      'state_changed',
+      snapshot => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        console.log('Upload is ' + progress + '% done')
         switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
+          case 'paused':
+            console.log('Upload is paused')
+            break
+          case 'running':
+            console.log('Upload is running')
+            break
         }
       },
-      (error) => {
-        // Handle unsuccessful uploads
-      },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          addToDatabase(db, product, downloadURL, productId);
-          alert(`Product ${product.name} added successfully`);
-        });
+        getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+          addToDatabase(db, product, downloadURL, productId)
+          alert(`Product ${product.name} added successfully`)
+        })
       }
-    );
-  };
+    )
+  }
 
   return (
     <>
@@ -207,9 +204,9 @@ export default function Create() {
         </div>
       </form>
     </>
-  );
+  )
 }
 
 Create.getLayout = function getLayout(page) {
-  return <AppLayout>{page}</AppLayout>;
-};
+  return <AppLayout>{page}</AppLayout>
+}

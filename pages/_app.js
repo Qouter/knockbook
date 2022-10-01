@@ -1,8 +1,16 @@
-import "../styles/globals.css";
-import { UserProvider } from "@auth0/nextjs-auth0";
+import '../styles/globals.css'
 
-export default function MyApp({ Component, pageProps }) {
-  const getLayout = Component.getLayout || ((page) => page);
+import { SessionProvider } from 'next-auth/react'
 
-  return <UserProvider>{getLayout(<Component {...pageProps} />)}</UserProvider>;
+export default function MyApp({
+  Component,
+  pageProps: { session, ...pageProps }
+}) {
+  const getLayout = Component.getLayout || (page => page)
+
+  return (
+    <SessionProvider session={session}>
+      {getLayout(<Component {...pageProps} />)}
+    </SessionProvider>
+  )
 }
